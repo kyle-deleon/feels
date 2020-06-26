@@ -15,4 +15,16 @@ class Feels(models.Model):
     content = models.CharField(max_length=140)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    creator = models.ForeignKey(User,related_name="has_feels", on_delete="CASCADE")
+    creator = models.ForeignKey(User,related_name="feels_created", on_delete="CASCADE")
+
+class Comments(models.Model):
+    content = models.CharField(max_length=140)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey(User,related_name="comments_created", on_delete="CASCADE")
+    feels = models.ForeignKey(Feels,related_name="has_comments", on_delete="CASCADE")
+    
+
+
+
+
