@@ -16,6 +16,8 @@ class Feels(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(User,related_name="feels_created", on_delete="CASCADE")
+    liked_by = models.ManyToManyField(User, related_name="liked_feels")
+
 
 class Comments(models.Model):
     content = models.CharField(max_length=140)
