@@ -1,0 +1,1 @@
+hash = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt()).decode()

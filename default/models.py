@@ -1,5 +1,6 @@
 from django.db import models
 import re
+import bcrypt
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -17,9 +18,11 @@ class UserManager(models.Manager):
         if not EMAIL_REGEX.match(postData['email']):
             errors["email"] = "Please enter valid email"
         result = User.objects.filter(user_name=postData['email'])
-        #use .filter over .get if you dont know if youre going to get something back from database
+        #use .filter over .get if you dont know what the query result will be
         if result:
             errors['email'] = "Email name already in use "
+
+        
         return errors
 
 class User(models.Model):
