@@ -14,7 +14,7 @@ def create_users(request):
             messages.error(request, value)
         return redirect('/')
     else:
-        user = User.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"], user_name=request.POST["user_name"])
+        user = User.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"], user_name=request.POST["email"])
         print(user)
 
         request.session['uid'] = user.id

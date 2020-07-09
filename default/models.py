@@ -12,11 +12,14 @@ class UserManager(models.Manager):
             errors["first_name"] = "First name should be two characters long"
         if len(postData["last_name"]) < 2:
             errors["last_name"] = "Last name should be two characters long"
-        if len(postData["user_name"]) < 2:
-            errors["user_name"] = "User name should be two characters long"
+        if len(postData["email"]) < 1:
+            errors["email"] = "Email cannot be blank"
         if not EMAIL_REGEX.match(postData['email']):
             errors["email"] = "Please enter valid email"
-        
+        result = User.objects.filter(user_name=postData['email'])
+        #use .filter over .get if you dont know if youre going to get something back from database
+        if result:
+            errors['email'] = "Email name already in use "
         return errors
 
 class User(models.Model):
