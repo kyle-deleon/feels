@@ -26,7 +26,8 @@ class UserManager(models.Manager):
             errors["bday"] = "Birthday cannot be in the future"
         if len(postData["password"]) < 8:
             errors["password"] = "password must be atleast 8 characters long"
-        elif postData["password"]
+        elif postData["password"] != postData["confirm_password"]:
+            errors["password"] = "Passwords do not match."
 
         result = User.objects.filter(email=postData['email'])
         #use .filter over .get if you dont know what the query result will be

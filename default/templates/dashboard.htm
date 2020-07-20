@@ -14,7 +14,7 @@
     </form>
     
     {% for feels in all_feels %}
-    <h4>{{ feels.creator.user_name }} says:</h4>
+    <h4>{{ feels.creator.first_name }} says:</h4>
     <p>{{ feels.content }}</p>
     <a href="/like/{{feels.id}}" role="button">Like</a>
     {% endfor %}

@@ -14,13 +14,15 @@ def create_users(request):
             messages.error(request, value)
         return redirect('/')
     else:
-        user = User.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"], email=request.POST["email"])
+        hash_pw = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
+        user = User.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"], email=request.POST["email"], bday=request.POST['bday'], password=hash_pw )
         print(user)
 
         request.session['uid'] = user.id
         #request.session['greeting'] = request.POST["first_name"]
 
         return redirect("/dashboard")
+
 
 def dashboard(request):
     context = {
