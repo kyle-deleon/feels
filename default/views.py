@@ -23,6 +23,27 @@ def create_users(request):
 
         return redirect("/dashboard")
 
+def login(request):
+    # see if the username provided exists in the database
+    user = User.objects.filter(email=request.POST['email']) # why are we using filter here instead of get?
+    if len(user) > 0: # note that we take advantage of truthiness here: an empty list will return falsecopy
+        logged_user = user[0] 
+        # assuming we only have one user with this username, the user would be first in the list we get back
+        # of course, we should have some logic to prevent duplicates of usernames when we create users
+        # use bcrypt's check_password_hash method, passing the hash from our database and the password from the form
+        if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
+            # if we get True after checking the password, we may put the user id in session
+            request.session['userid'] = logged_user.id
+            # never render on a post, always redirect!
+            return redirect('/dashboard')
+        else:
+            messages.error(request, "Email and password did not match.")
+    # if we didn't find anything in the database by searching by username or if the passwords don't match, 
+    # redirect back to a safe route
+    else:
+        messages.error(request, "Email address is not registered.")
+    return redirect("/")
+        
 
 def dashboard(request):
     context = {

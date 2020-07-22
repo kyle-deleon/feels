@@ -18,25 +18,40 @@
         {% endif %}
         <label for="first_name">First Name</label>
         <input type="text" name="first_name">
-
+        <br>
         <label for="last_name">Last Name</label>
         <input type="text" name="last_name">
-
+        <br>
         <label for="bday">Birthday</label>
         <input type="date" id="start" name="bday"
        value=""
        min="1901-01-01" max="">
-
+        <br>
         <label for="email">Email</label>
         <input type="text" name="email">
-
+        <br>
         <label for="password">password</label>
         <input type="password" name="password">
-
+        <br>
         <label for="confirm_password">Confirm Password</label>
         <input type="password" name="confirm_password">
-
+        <br>
         <button type="submit">Submit</button>
+    </form>
+
+    <br>
+
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        {% csrf_token %}
+        <label for="email">Email</label>
+        <input type="text" name="email">
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password">
+        <br>
+        <button type="submit">Login</button>
+
     </form>
 </body>
 </html>
