@@ -33,7 +33,7 @@ def login(request):
         # use bcrypt's check_password_hash method, passing the hash from our database and the password from the form
         if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
             # if we get True after checking the password, we may put the user id in session
-            request.session['userid'] = logged_user.id
+            request.session['uid'] = logged_user.id
             # never render on a post, always redirect!
             return redirect('/dashboard')
         else:
@@ -64,5 +64,18 @@ def create_like(request, feels_id):
     user.liked_feels.add(feels)
 
     return redirect("/dashboard")
+
+def delete_like(request, feels_id):
+    user = User.objects.get(id=request.session['uid'])
+    feels = Feels.objects.get(id=feels_id)
+
+    user.liked_feels.remove(feels)
+
+    return redirect("/dashboard")
+
+def logout(request):
+    request.session.flush()
+
+    return redirect('/')
 
 

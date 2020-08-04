@@ -6,6 +6,7 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <a href="/logout">Logout</a>
     <h1>Welcome Back, {{logged_user.first_name}} </h1>
     <form action="/feels" method="post">
         {% csrf_token %}
@@ -16,7 +17,11 @@
     {% for feels in all_feels %}
     <h4>{{ feels.creator.first_name }} says:</h4>
     <p>{{ feels.content }}</p>
-    <a href="/like/{{feels.id}}" role="button">Like</a>
+        {% if logged_user in feels.liked_by.all %}
+            <a href="/unlike/{{feels.id}}" role="button">Unlike</a>
+        {% elif logged_user not in feels.liked_by.all and request.session.uid != feels.creator.id %}
+            <a href="/like/{{feels.id}}" role="button">like</a>
+        {% endif %}
     {% endfor %}
     <!--{% for feels in logged_user.feels_created.all|dictsortreversed:"created_at" %} <--back door | tags in filters{% endfor %}-->
 </body>

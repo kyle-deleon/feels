@@ -8,5 +8,7 @@ urlpatterns = [
     path('login', views.login),
     path('dashboard', views.dashboard),
     path('feels', views.create_feels), 
-    path('like/<int:feels_id>', views.create_like)
+    path('like/<int:feels_id>', views.create_like),
+    path('unlike/<int:feels_id>', views.delete_like),
+    path('logout', views.logout)
 ]
