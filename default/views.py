@@ -57,6 +57,11 @@ def create_feels(request):
 
     return redirect("/dashboard")
 
+def create_comment(request):
+    Comments.objects.create(content=request.POST['comment_content'], creator=User.objects.get(id=request.session['uid']), feels=Feels.objects.get(id=request.POST['feels_id']))
+
+    return redirect("/dashboard")
+
 def create_like(request, feels_id):
     user = User.objects.get(id=request.session['uid'])
     feels = Feels.objects.get(id=feels_id)
