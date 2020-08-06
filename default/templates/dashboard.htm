@@ -6,7 +6,6 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <a href="/logout">Logout</a>
     <h1>Welcome Back, {{logged_user.first_name}} </h1>
     <form action="/feels" method="post">
         {% csrf_token %}
@@ -29,6 +28,9 @@
             <a href="/like/{{feels.id}}" role="button">like</a>
         {% endif %}
     {% endfor %}
+    <br>
+    <br>
+    <a href="/logout">Logout</a>
     <!--{% for feels in logged_user.feels_created.all|dictsortreversed:"created_at" %} <--back door | tags in filters{% endfor %}-->
 </body>
 </html>
