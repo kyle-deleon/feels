@@ -22,6 +22,11 @@
         <input type="text" name="comment_content">
         <button type="submit">Add Comment</button>
     </form>
+    <div>
+        {% for comment in feels.has_comments.all reversed %}
+        <p>{{comment.content}} &mdash; {{comment.creator.first_name}}</p>
+        {% endfor %}
+    </div>
         {% if logged_user in feels.liked_by.all %}
             <a href="/unlike/{{feels.id}}" role="button">Unlike</a>
         {% elif logged_user not in feels.liked_by.all and request.session.uid != feels.creator.id %}
