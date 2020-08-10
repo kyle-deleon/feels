@@ -24,7 +24,7 @@
     </form>
     <div>
         {% for comment in feels.has_comments.all reversed %}
-        <p>{{comment.content}} &mdash; {{comment.creator.first_name}}</p>
+        <p>{{comment.content}} &mdash; {{comment.creator.first_name}} <small>{{comment.created_at|date:"D d M Y"}}</small></p>
         {% endfor %}
     </div>
         {% if logged_user in feels.liked_by.all %}
