@@ -12,7 +12,7 @@
         <input type="text" name="content" placeholder="What's goin' on?">
         <button type="submit">Feels</button>
     </form>
-    
+    <!--original for-loop-->
     {% for feels in all_feels %}
     <h4>{{ feels.creator.first_name }} says:</h4>
     <p>{{ feels.content }}</p>
@@ -23,15 +23,21 @@
         <button type="submit">Add Comment</button>
     </form>
     <div>
+        <!-- comments from specific singular feels-->
         {% for comment in feels.has_comments.all reversed %}
-        <p>{{comment.content}} &mdash; {{comment.creator.first_name}} <small>{{comment.created_at|date:"D d M Y"}}</small></p>
+            <p>{{comment.content}} &mdash; {{comment.creator.first_name}} <small>{{comment.created_at|date:"D d M Y"}}</small></p>
         {% endfor %}
     </div>
         {% if logged_user in feels.liked_by.all %}
-            <a href="/unlike/{{feels.id}}" role="button">Unlike</a>
+            <a href="/unlike/{{feels.id}}" role="button">Unlike &mdash; {{feels.liked_by.count}}</a>
         {% elif logged_user not in feels.liked_by.all and request.session.uid != feels.creator.id %}
-            <a href="/like/{{feels.id}}" role="button">like</a>
+            <a href="/like/{{feels.id}}" role="button">like &mdash; {{feels.liked_by.count}}</a>
         {% endif %}
+        {% for user in feels.liked_by.all %}
+            <ul>
+                <li>{{user.first_name}} {{user.last_name}}</li>
+            </ul>
+        {% endfor %}
     {% endfor %}
     <br>
     <br>
